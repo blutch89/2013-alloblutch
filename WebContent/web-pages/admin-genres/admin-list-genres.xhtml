@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+	<h:body>
+		<ui:composition template="/templates/commonLayout.xhtml">
+			<ui:define name="title">
+				AlloBlutch - Liste des genres
+			</ui:define>
+			
+			<ui:define name="content">
+				<h:form id="genresList">
+					<p:contextMenu for="genresDatatable">
+						<p:menuitem value="Ajouter" icon="ui-icon-plusthick" actionListener="#{adminGenreBean.gotoAddGenrePage()}"/> 
+				        <p:menuitem value="Modifier" icon="ui-icon-pencil" actionListener="#{adminGenreBean.gotoEditGenrePage()}"/>  
+				        <p:menuitem value="Delete" update="genresDatatable" icon="ui-icon-close" actionListener="#{adminGenreBean.deleteGenre()}"/>  
+				    </p:contextMenu>
+				
+					<h2>Liste de tous les genres</h2>
+					<br />
+					
+					<p:dataTable id="genresDatatable" var="genre" value="#{adminGenreBean.getAllGenresByAlphabeticalOrder()}" emptyMessage="Aucun genre trouvé"
+					paginator="true" rows="25" 
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="25, 50, 100"
+					widgetVar="genresTable"
+					rowKey="#{genre.id}" selection="#{adminGenreBean.selectedGenre}" selectionMode="single">
+					
+				        <p:column sortBy="#{genre.id}" headerText="id" filterMatchMode="contains" filterBy="#{genre.id}">
+				        	<h:link value="#{genre.id}" outcome="/web-pages/movies/movies-by-genre.xhtml?genre=#{genre.id}"/>
+				        </p:column>  
+				  
+				        <p:column sortBy="#{genre.description}" headerText="Genre" filterMatchMode="contains" filterBy="#{genre.description}">
+				        	<h:link value="#{genre.description}" outcome="/web-pages/movies/movies-by-genre.xhtml?genre=#{genre.id}"/> 
+				        </p:column>
+				    </p:dataTable>
+			    </h:form> 
+			</ui:define>
+		</ui:composition>
+	</h:body>
+
+</html>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+	<h:body>
+		<ui:composition template="/templates/commonLayout.xhtml">
+			<ui:define name="title">
+				AlloBlutch - Liste des films
+			</ui:define>
+			
+			<ui:define name="content">
+				<h:form id="moviesList">
+					<p:contextMenu for="moviesDatatable">
+						<p:menuitem value="Ajouter" icon="ui-icon-plusthick" actionListener="#{adminMovieBean.gotoAddMoviePage()}"/> 
+				        <p:menuitem value="Afficher" update="movieDisplay" icon="ui-icon-search" oncomplete="movieDialog.show()"/>
+				        <p:menuitem value="Modifier" icon="ui-icon-pencil" actionListener="#{adminMovieBean.gotoEditMoviePage()}"/>  
+				        <p:menuitem value="Delete" update="moviesDatatable" icon="ui-icon-close" actionListener="#{adminMovieBean.deleteMovie()}"/>  
+				    </p:contextMenu>
+				
+					<h2>Liste de tous les films</h2>
+					<br />
+					
+					<p:dataTable id="moviesDatatable" var="movie" value="#{adminMovieBean.getAllMoviesByAlphabeticalOrder()}" emptyMessage="Aucune vidéo trouvée"
+					paginator="true" rows="25" 
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="25, 50, 100"
+					widgetVar="moviesTable"
+					rowKey="#{movie.id}" selection="#{adminMovieBean.selectedMovie}" selectionMode="single">
+					
+				        <p:column sortBy="#{movie.id}" headerText="id" filterMatchMode="contains" filterBy="#{movie.id}">
+				        	<h:link value="#{movie.id}" outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}"/>
+				        </p:column>  
+				  
+				        <p:column sortBy="#{movie.title}" headerText="Titre" filterMatchMode="contains" filterBy="#{movie.title}">
+				        	<h:link value="#{movie.title}" outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}"/> 
+				        </p:column>  
+				  
+				        <p:column sortBy="#{movie.genre.description}" headerText="Genre"  filterMatchMode="contains" filterBy="#{movie.genre.description}">  
+				            <h:link value="#{movie.genre.description}" outcome="/web-pages/movies/movies-by-genre.xhtml?genre=#{movie.genre.id}"/>
+				        </p:column>
+				
+				        <p:column sortBy="#{movie.cinemaDate}" headerText="Date" filterMatchMode="contains" filterBy="#{movie.cinemaDateToYearString()}">
+				            <h:outputText value="#{movie.cinemaDateToYearString()}" />
+				        </p:column>
+				    </p:dataTable>
+				    
+				    <p:dialog header="Affichage film" widgetVar="movieDialog" resizable="false" id="movieDial"  
+                		showEffect="fade" hideEffect="explode" modal="true" width="700px">
+                		 
+                		<h:panelGroup id="movieDisplay">
+	        				<h2><h:outputText value="#{adminMovieBean.selectedMovie.title}" /></h2>
+						    <h:panelGrid columns="2" cellpadding="10" styleClass="moviepanelgrid">
+						        <h:graphicImage library="default" name="movies/#{adminMovieBean.selectedMovie.pictureName}" /> 
+						        <h:panelGroup>
+						        	<h:outputText styleClass="bold-text" value="#{adminMovieBean.selectedMovie.genre.description} - " />
+						        	<h:outputText styleClass="bold-text" value="Date de sortie: " />
+						        	<h:outputText value="#{adminMovieBean.selectedMovie.publicDateToString()}" />
+						        	<br />
+						        	<h:outputText styleClass="bold-text" value="De " />
+						        	<h:outputText value="#{adminMovieBean.selectedMovie.getDirector().nameToString()}" />
+						        	<br />
+						        	<h:outputText styleClass="bold-text" value="Avec " />
+						        	<h:outputText value="#{adminMovieBean.selectedMovie.getFirstActorsToString()}" />
+						        	<br />
+						        	<br />
+						        	<h:panelGrid columns="2">
+							        	<h:outputText styleClass="bold-text" value="Note de la presse: " />
+							        	<p:rating value="#{adminMovieBean.selectedMovie.mediaNote}" stars="10" readonly="true" />
+						   				
+							        	<h:outputText styleClass="bold-text" value="Note des spectateurs: " />
+							        	<p:rating value="#{adminMovieBean.selectedMovie.publicNote}" stars="10" readonly="true" />
+						        	</h:panelGrid>
+						        	<br />
+						        	<br />
+						        	<h:outputText value="#{adminMovieBean.selectedMovie.shortSynopsis()}" />
+						        </h:panelGroup>
+						    </h:panelGrid>
+					    </h:panelGroup>
+       				</p:dialog>
+			    </h:form> 
+			</ui:define>
+		</ui:composition>
+	</h:body>
+
+</html>

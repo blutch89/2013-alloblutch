@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+	<h:body>
+		<ui:composition template="/templates/commonLayout.xhtml">
+			<ui:define name="title">
+				AlloBlutch - #{movieBean.movie.title}
+			</ui:define>
+			
+			<ui:define name="content">
+				<h2>#{movieBean.movie.title}</h2>
+				
+				<h:panelGrid columns="2" cellpadding="10" styleClass="moviepanelgrid">
+					<h:graphicImage library="default" name="movies/#{movieBean.movie.pictureName}" />
+					<h:panelGrid columns="2" cellpadding="7">
+						<h:outputText styleClass="bold-text" value="Genre" />
+						<h:outputText value="#{movieBean.movie.genre.description}" />
+						
+						<h:outputText styleClass="bold-text" value="Date de sortie au cinéma" />
+						<h:outputText value="#{movieBean.movie.cinemaDateToString()}" />
+						
+						<h:outputText styleClass="bold-text" value="Date de sortie" />
+						<h:outputText value="#{movieBean.movie.publicDateToString()}" />
+						
+						<h:outputText styleClass="bold-text" value="Réalisateur" />
+						<h:link value="#{movieBean.movie.getDirector().nameToString()}" outcome="/web-pages/persons/person.xhtml?id=#{movieBean.movie.getDirector().id}" />
+						
+						<h:outputText styleClass="bold-text" value="Producteur" />
+						<h:link value="#{movieBean.movie.getProducer().nameToString()}" outcome="/web-pages/persons/person.xhtml?id=#{movieBean.movie.getProducer().id}" />
+						
+						<h:outputText styleClass="bold-text" value="Note de la presse" />
+						<p:rating value="#{movieBean.movie.mediaNote}" stars="10" readonly="true" />
+						
+						<h:outputText styleClass="bold-text" value="Note des spectateurs" />
+						<p:rating value="#{movieBean.movie.publicNote}" stars="10" readonly="true" />
+					</h:panelGrid>
+				</h:panelGrid>
+				
+				<h3>Synopsis</h3>
+				<p>#{movieBean.movie.synopsis}</p>
+				
+				<h3>Acteurs</h3>
+				<p:dataGrid value="#{movieBean.movie.getActors()}" var="actor" columns="5" styleClass="moviedatagrid">
+					<h:link outcome="/web-pages/persons/person.xhtml?id=#{actor.id}">
+						<h:graphicImage library="default" name="persons/#{actor.pictureName}" />
+						<br />
+						<h:outputText value="#{actor.nameToString()}" />
+					</h:link>
+				</p:dataGrid>
+				
+			</ui:define>
+		</ui:composition>
+	</h:body>
+
+</html>

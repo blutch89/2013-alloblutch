@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+	<h:body>
+		<ui:composition template="/templates/commonLayout.xhtml">
+			<ui:define name="title">
+				AlloBlutch - Modification d'un genre
+			</ui:define>
+			
+			<ui:define name="content">
+				<h2>Modification d'un genre</h2>
+				<br />
+				
+				<h:form id="editGenre" enctype="multipart/form-data">
+					<fieldset>
+						<legend>Informations générales</legend>
+						
+						<h:panelGrid columns="3" cellspacing="20">
+							<h:outputLabel for="description">Description</h:outputLabel>
+							<p:inputText id="description" value="#{adminGenreBean.genre.description}" requiredMessage="Ce champs est requis">
+								<f:validateRequired  />
+							</p:inputText>
+							<h:message id="descriptionMessage" for="description" />
+						</h:panelGrid>
+					</fieldset>
+					<br />
+					
+					<h:commandButton value="Modifier" action="#{adminGenreBean.editGenre()}">
+						<f:param name="editid" value="#{adminGenreBean.genreIdParam}" />
+					</h:commandButton>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+
+</html>

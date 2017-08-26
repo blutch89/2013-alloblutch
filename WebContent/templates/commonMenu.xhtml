@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+	<body>
+		<ui:composition>
+			<ul>
+				<li>
+					<h2>Films</h2>
+					<ul>
+		               	<li><h:link value="Liste des films" outcome="/web-pages/movies/movieslist.xhtml" /></li>
+		               	<li><h:link value="Les meilleures films" outcome="/web-pages/movies/movieslist.xhtml?filter=best" /></li>
+		               	<li><h:link value="Les dernières sorties publiques" outcome="/web-pages/movies/movieslist.xhtml?filter=last_movies_released" /></li>
+		               	<li><h:link value="Au cinéma" outcome="/web-pages/movies/movieslist.xhtml?filter=in_cinema" /></li>
+		               	<li><h:link value="Par genre" outcome="/web-pages/movies/movies-by-genre.xhtml" /></li>	               	
+		           	</ul>
+				</li>
+				<li>
+					<h2>Personnalités</h2>
+					<ul>
+		               	<li><h:link value="Réalisateurs" outcome="/web-pages/persons/personslist.xhtml?type=directors" /></li>
+		               	<li><h:link value="Producteurs" outcome="/web-pages/persons/personslist.xhtml?type=producers" /></li>
+		               	<li><h:link value="Acteurs" outcome="/web-pages/persons/personslist.xhtml?type=actors" /></li>
+		           	</ul>	
+				</li>
+				<li>
+					<h2>Admin</h2>
+					<ul>
+		               	<li><h:link value="Administrer les films" outcome="/web-pages/admin-movies/admin-list-movies.xhtml" /></li>
+		               	<li><h:link value="Administrer les personnalités" outcome="/web-pages/admin-persons/admin-list-persons.xhtml" /></li>
+		               	<li><h:link value="Administrer les genres" outcome="/web-pages/admin-genres/admin-list-genres.xhtml" /></li>
+		           	</ul>	
+				</li>
+			</ul>
+		</ui:composition>
+	</body>
+</html>

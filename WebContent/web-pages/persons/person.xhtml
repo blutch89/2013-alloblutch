@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+	<h:body>
+		<ui:composition template="/templates/commonLayout.xhtml">
+			<ui:define name="title">
+				AlloBlutch - #{personBean.person.nameToString()}
+			</ui:define>
+			
+			<ui:define name="content">
+				<h2>#{personBean.person.nameToString()}</h2>
+			
+				<h:panelGrid columns="2" cellpadding="10" styleClass="personpanelgrid">
+					<h:graphicImage library="default" name="persons/#{personBean.person.pictureName}" />
+					<h:panelGrid columns="2" cellpadding="7">
+						<h:outputText styleClass="bold-text" value="Date de naissance" />
+						<h:outputText value="#{personBean.person.birthdayToString()}" />
+						
+						<h:outputText styleClass="bold-text" value="Métiers" />
+						<h:outputText value="#{personBean.person.getProfessionsToString()}" />
+					</h:panelGrid>
+				</h:panelGrid>
+				<br />
+				<hr />
+				<br />
+				
+				<h:panelGroup rendered="#{personBean.person.isDirector()}">
+					<h3>Films réalisés</h3>
+					<p:dataGrid columns="5" value="#{personBean.person.getMoviesAsDirector()}" var="movie" styleClass="persondatagrid">
+							<h:panelGrid columns="1" style="width: 19%">
+								<h:link outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}">
+									<h:graphicImage library="default" name="movies/#{movie.pictureName}" />
+								</h:link>
+								
+								<h:link outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}">
+									<h:outputText value="#{movie.title}" />
+								</h:link>
+							</h:panelGrid>
+					</p:dataGrid>
+				</h:panelGroup>
+				<br />
+				
+				<h:panelGroup rendered="#{personBean.person.isProducer()}">
+					<h3>Films produits</h3>
+					<p:dataGrid columns="5" value="#{personBean.person.getMoviesAsProducer()}" var="movie" styleClass="persondatagrid">
+						<h:link outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}">
+							<h:panelGrid columns="1" style="width: 19%">
+								<h:link outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}">
+									<h:graphicImage library="default" name="movies/#{movie.pictureName}" />
+								</h:link>
+								
+								<h:link outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}">
+									<h:outputText value="#{movie.title}" />
+								</h:link>
+							</h:panelGrid>
+						</h:link>
+					</p:dataGrid>
+				</h:panelGroup>
+				<br />
+				
+				<h:panelGroup rendered="#{personBean.person.isActor()}">
+					<h3>Films joués</h3>
+					<p:dataGrid columns="5" value="#{personBean.person.getMoviesAsActor()}" var="movie" styleClass="persondatagrid">
+						<h:link outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}">
+							<h:panelGrid columns="1" style="width: 19%">
+								<h:link outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}">
+									<h:graphicImage library="default" name="movies/#{movie.pictureName}" />
+								</h:link>
+								
+								<h:link outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}">
+									<h:outputText value="#{movie.title}" />
+								</h:link>
+							</h:panelGrid>
+						</h:link>
+					</p:dataGrid>
+				</h:panelGroup>
+				<br />
+				
+			</ui:define>
+		</ui:composition>
+	</h:body>
+
+</html>

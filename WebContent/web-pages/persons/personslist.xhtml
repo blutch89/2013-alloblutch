@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+	<h:body>
+		<ui:composition template="/templates/commonLayout.xhtml">
+			<ui:define name="title">
+				AlloBlutch - #{personsListBean.getPageTitle()}
+			</ui:define>
+			
+			<ui:define name="content">
+				<h2>#{personsListBean.getPageTitle()}</h2>
+			
+				<h:form id="form">
+				    <p:dataGrid var="person" value="#{personsListBean.findPersonsFromUrl()}" columns="5"  
+				        rows="30" paginator="true" paginatorPosition="bottom"
+				        paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink}" styleClass="persondatagrid">  
+				  
+				  		<h:panelGrid columns="1">
+					  		<h:link outcome="/web-pages/persons/person.xhtml?id=#{person.id}">
+					  			<h:graphicImage library="default" name="persons/#{person.pictureName}" />
+					  			<br />
+					  			<h:outputText value="#{person.nameToString()}" />
+				  			</h:link>
+				  		</h:panelGrid>
+				  		
+				    </p:dataGrid>
+			    </h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+
+</html>

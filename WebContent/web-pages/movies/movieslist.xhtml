@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+	<h:body>
+		<ui:composition template="/templates/commonLayout.xhtml">
+			<ui:define name="title">
+				AlloBlutch - #{moviesListBean.urlToString()}
+			</ui:define>
+			
+			<ui:define name="content">
+				<h:form id="form">
+					<p:dataGrid var="movie" value="#{moviesListBean.findMoviesFromUrl()}" columns="1"  
+				        rows="10" paginator="true" paginatorPosition="bottom" emptyMessage="Aucun film"
+				        paginatorTemplate="{FirstPageLink} {PageLinks} {LastPageLink}" styleClass="moviedatagrid">
+				        
+				    	<ui:include src="/templates/movies/commonMoviesList.xhtml" />
+				    </p:dataGrid>
+			    </h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+
+</html>

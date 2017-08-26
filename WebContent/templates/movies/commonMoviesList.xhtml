@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+	<h:body>
+		<ui:composition>
+		    <h2><h:link value="#{movie.title}" outcome="/web-pages/movies/movie.xhtml?id=#{movie.id}" /></h2>
+		    <h:panelGrid columns="2" cellpadding="10" styleClass="moviepanelgrid">
+		        <h:graphicImage library="default" name="movies/#{movie.pictureName}" /> 
+		        <h:panelGroup>
+		        	<h:outputText styleClass="bold-text" value="#{movie.genre.description} - " />
+		        	<h:outputText styleClass="bold-text" value="Date de sortie: " />
+		        	<h:outputText value="#{movie.publicDateToString()}" />
+		        	<br />
+		        	<h:outputText styleClass="bold-text" value="De " />
+		        	<h:link styleClass="bold-text" value="#{movie.getDirector().nameToString()}" outcome="/web-pages/persons/person.xhtml?id=#{movie.getDirector().id}" />
+		        	<br />
+		        	<h:outputText styleClass="bold-text" value="Avec " />
+		        	<h:outputText value="#{movie.getFirstActorsToString()}" />
+		        	<br />
+		        	<br />
+		        	<h:panelGrid columns="2">
+			        	<h:outputText styleClass="bold-text" value="Note de la presse: " />
+			        	<p:rating value="#{movie.mediaNote}" stars="10" readonly="true" />
+		   				
+			        	<h:outputText styleClass="bold-text" value="Note des spectateurs: " />
+			        	<p:rating value="#{movie.publicNote}" stars="10" readonly="true" />
+		        	</h:panelGrid>
+		        	<br />
+		        	<br />
+		        	<h:outputText value="#{movie.shortSynopsis()}" />
+		        </h:panelGroup>
+		    </h:panelGrid>
+		    <hr />
+		    <br />
+    	</ui:composition>
+	</h:body>
+</html>

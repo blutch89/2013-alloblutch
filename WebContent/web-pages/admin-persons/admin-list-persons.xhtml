@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+	<h:body>
+		<ui:composition template="/templates/commonLayout.xhtml">
+			<ui:define name="title">
+				AlloBlutch - Liste des personnalités
+			</ui:define>
+			
+			<ui:define name="content">
+				<h:form id="personsList">
+					<p:contextMenu for="personsDatatable">
+						<p:menuitem value="Ajouter" icon="ui-icon-plusthick" actionListener="#{adminPersonBean.gotoAddPersonPage()}"/> 
+				        <p:menuitem value="Afficher" update="personDisplay" icon="ui-icon-search" oncomplete="personDialog.show()"/>
+				        <p:menuitem value="Modifier" icon="ui-icon-pencil" actionListener="#{adminPersonBean.gotoEditPersonPage()}"/>  
+				        <p:menuitem value="Delete" update="personsDatatable" icon="ui-icon-close" actionListener="#{adminPersonBean.deletePerson()}"/>  
+				    </p:contextMenu>
+				
+					<h2>Liste de toutes les personnalités</h2>
+					<br />
+					
+					<p:dataTable id="personsDatatable" var="person" value="#{adminPersonBean.getAllPersonsByAlphabeticalOrder()}" emptyMessage="Aucune personnalité trouvée"
+					paginator="true" rows="25" 
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="25, 50, 100"
+					widgetVar="personsTable"
+					rowKey="#{person.id}" selection="#{adminPersonBean.selectedPerson}" selectionMode="single">
+					
+				        <p:column sortBy="#{person.id}" headerText="id" filterMatchMode="contains" filterBy="#{person.id}">
+				        	<h:link value="#{person.id}" outcome="/web-pages/persons/person.xhtml?id=#{person.id}"/>
+				        </p:column>  
+				  
+				        <p:column sortBy="#{person.nameToString()}" headerText="Prénom" filterMatchMode="contains" filterBy="#{person.nameToString()}">
+				        	<h:link value="#{person.nameToString()}" outcome="/web-pages/persons/person.xhtml?id=#{person.id}"/> 
+				        </p:column>
+				
+				        <p:column sortBy="#{person.birthday}" headerText="Date de naissance" filterMatchMode="contains" filterBy="#{person.birthdayToString()}">
+				            <h:outputText value="#{person.birthdayToString()}" />
+				        </p:column>
+				    </p:dataTable>
+				    
+				    <p:dialog header="Affichage personnalité" widgetVar="personDialog" resizable="false" id="personDial"  
+                		showEffect="fade" hideEffect="explode" modal="true" width="700px">
+                		 
+                		<h:panelGroup id="personDisplay">
+	        				<h2>#{adminPersonBean.selectedPerson.nameToString()}</h2>
+			
+							<h:panelGrid columns="2" cellpadding="10" styleClass="personpanelgrid">
+								<h:graphicImage library="default" name="persons/#{adminPersonBean.selectedPerson.pictureName}" />
+								<h:panelGrid columns="2" cellpadding="7">
+									<h:outputText styleClass="bold-text" value="Date de naissance" />
+									<h:outputText value="#{adminPersonBean.selectedPerson.birthdayToString()}" />
+									
+									<h:outputText styleClass="bold-text" value="Métiers" />
+									<h:outputText value="#{adminPersonBean.selectedPerson.getProfessionsToString()}" />
+								</h:panelGrid>
+							</h:panelGrid>
+					    </h:panelGroup>
+       				</p:dialog>
+			    </h:form> 
+			</ui:define>
+		</ui:composition>
+	</h:body>
+
+</html>

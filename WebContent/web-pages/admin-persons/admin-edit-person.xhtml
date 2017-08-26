@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+	<h:body>
+		<ui:composition template="/templates/commonLayout.xhtml">
+			<ui:define name="title">
+				AlloBlutch - Modification d'une personnalité
+			</ui:define>
+			
+			<ui:define name="content">
+				<h2>Modification d'une personnalité</h2>
+				<br />
+				
+				<h:form id="addPerson" enctype="multipart/form-data">
+					<fieldset>
+						<legend>Informations générales</legend>
+						
+						<h:panelGrid columns="3" cellspacing="20">
+							<h:outputLabel for="firstName">Prénom</h:outputLabel>
+							<p:inputText id="firstName" value="#{adminPersonBean.person.firstName}" requiredMessage="Ce champs est requis">
+								<f:validateRequired  />
+							</p:inputText>
+							<h:message id="firstNameMessage" for="firstName" />
+							
+							<h:outputLabel for="lastName">Nom</h:outputLabel>
+							<p:inputText id="lastName" value="#{adminPersonBean.person.lastName}" requiredMessage="Ce champs est requis">
+								<f:validateRequired  />
+							</p:inputText>
+							<h:message id="lastNameMessage" for="lastName" />
+							
+							<h:outputLabel for="birthday">Date de naissance</h:outputLabel>
+							<p:inputMask id="birthday" value="#{adminPersonBean.person.birthday}" mask="99/99/9999" converterMessage="Impossible de convertir la date" requiredMessage="Ce champs est requis">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:inputMask>
+							<h:message id="birthdayMessage" for="birthday" />
+							
+							<h:outputLabel for="picture">Image</h:outputLabel>
+							<p:fileUpload id="picture" value="#{adminPersonBean.picture}" mode="simple"/>
+				            <h:message id="pictureMessage" for="picture" />	
+						</h:panelGrid>
+					</fieldset>
+					<br />
+					
+					<h:commandButton value="Modifier" action="#{adminPersonBean.editPerson()}">
+						<f:param name="editid" value="#{adminPersonBean.personIdParam}" />
+					</h:commandButton>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+
+</html>

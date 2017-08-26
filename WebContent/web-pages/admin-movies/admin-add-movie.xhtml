@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"> 
+
+	<h:body>
+		<ui:composition template="/templates/commonLayout.xhtml">
+			<ui:define name="title">
+				AlloBlutch - Ajouter un film
+			</ui:define>
+			
+			<ui:define name="content">
+				<h2>Ajout d'un film</h2>
+				<br />
+				
+				<h:form id="addMovie" enctype="multipart/form-data">
+					<fieldset>
+						<legend>Informations générales</legend>
+						
+						<h:panelGrid columns="3" cellspacing="20">
+						
+							<h:outputLabel for="title">Titre</h:outputLabel>
+							<p:inputText id="title" value="#{adminMovieBean.movie.title}" requiredMessage="Ce champs est requis"  >
+								<f:validateRequired  />
+								<f:validator binding="#{movieTitleValidator}"/>
+							</p:inputText>
+							<h:message id="titleMessage" for="title" />
+							
+							<h:outputLabel for="genre">Genre</h:outputLabel>
+							<p:autoComplete id="genre" value="#{adminMovieBean.movie.genre}" completeMethod="#{adminMovieBean.completeGenre}"
+								var="g" itemLabel="#{g.description}" itemValue="#{g}"
+								converter="genreConverter" requiredMessage="Ce champs est requis">
+								<f:validateRequired />
+							</p:autoComplete>
+							<h:message id="genreMessage" for="genre" />
+								
+							<h:outputLabel for="cinemaDate">Date de sortie au cinéma</h:outputLabel>
+							<p:inputMask id="cinemaDate" value="#{adminMovieBean.movie.cinemaDate}" mask="99/99/9999" converterMessage="Impossible de convertir la date" requiredMessage="Ce champs est requis">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:inputMask>
+							<h:message id="cinemaDateMessage" for="cinemaDate" />
+							
+							<h:outputLabel for="publicDate">Date de sortie publique</h:outputLabel>
+							<p:inputMask id="publicDate" value="#{adminMovieBean.movie.publicDate}" mask="99/99/9999" converterMessage="Impossible de convertir la date" requiredMessage="Ce champs est requis">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+							</p:inputMask>
+							<h:message id="publicDateMessage" for="publicDate" />
+							
+							<h:outputLabel for="mediaNote">Note de la presse</h:outputLabel>
+							<p:rating id="mediaNote" value="#{adminMovieBean.movie.mediaNote}" stars="10" cancel="false" requiredMessage="Ce champs est requis">
+							</p:rating>
+							<h:message id="mediaNoteMessage" for="mediaNote" />
+							
+							<h:outputLabel for="publicNote">Note des spectateurs</h:outputLabel>
+							<p:rating id="publicNote" value="#{adminMovieBean.movie.publicNote}" stars="10" cancel="false" requiredMessage="Ce champs est requis">
+							</p:rating>
+							<h:message id="publicNoteMessage" for="publicNote" />
+							
+							<h:outputLabel for="picture">Image</h:outputLabel>
+							<p:fileUpload id="picture" value="#{adminMovieBean.picture}" mode="simple"/>
+				            <h:message id="pictureMessage" for="picture" />							
+						</h:panelGrid>
+					</fieldset>
+					<br />
+					
+					<fieldset class="fieldset-spacing">
+						<legend>Synopsis</legend>
+						<p:inputTextarea value="#{adminMovieBean.movie.synopsis}" rows="4" cols="100"/>						
+					</fieldset>
+					<br />
+					
+					<fieldset>
+						<legend>Personnalités</legend>
+						
+						<h:panelGrid columns="3" cellpadding="10">
+							<h:outputLabel value="Réalisateur" for="director"/>
+							<p:autoComplete value="#{adminMovieBean.director}" id="director" completeMethod="#{adminMovieBean.completePerson}"
+								var="p" itemLabel="#{p.nameToString()}" itemValue="#{p}"
+								converter="personConverter" forceSelection="true" requiredMessage="Ce champs est requis">
+								<f:validateRequired />
+							</p:autoComplete>
+							<h:message id="directorMessage" for="director" />
+								
+							<h:outputLabel value="Producteur" for="producer"/>
+							<p:autoComplete value="#{adminMovieBean.producer}" id="producer" completeMethod="#{adminMovieBean.completePerson}"
+								var="p" itemLabel="#{p.nameToString()}" itemValue="#{p}"
+								converter="personConverter" forceSelection="true"  requiredMessage="Ce champs est requis">
+								<f:validateRequired />
+							</p:autoComplete>
+							<h:message id="producerMessage" for="producer" />
+								
+							<h:outputLabel value="Acteurs" for="actors"/>
+							<p:autoComplete value="#{adminMovieBean.actors}" id="actors" completeMethod="#{adminMovieBean.completePerson}"
+								var="p" itemLabel="#{p.nameToString()}" itemValue="#{p}"
+								converter="personConverter" multiple="true"/>
+							<h:message id="actorsMessage" for="actors" />
+						</h:panelGrid>
+					</fieldset>
+					<br />
+					
+					<h:commandButton value="Ajouter" action="#{adminMovieBean.addMovie()}"/>
+				</h:form>
+			</ui:define>
+		</ui:composition>
+	</h:body>
+
+</html>
